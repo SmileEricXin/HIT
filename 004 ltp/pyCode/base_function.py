@@ -6,6 +6,10 @@ this file for base function, like split word, split sentences, and so on.
 """
 
 
+# 名词标注列表
+noun_dict = ["n", "nh", "ni"]
+
+
 postag_dict = {
     "a": "形容",
     "b": "名词修饰",
@@ -117,7 +121,7 @@ def recognize_word(words, postags):
 
 def ner_sentence(sentence):
     """
-    对句子进行命名实体识别
+    对句子进行命名实体识别，本函数包含分词、词性标注、命名实体识别三步
     :param sectence:
     :return:
     """

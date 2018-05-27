@@ -30,7 +30,7 @@ def test():
 
 def train_paper_data(data_path):
     """
-    用于论文的语料预处理
+    用于论文的训练语料预处理
     处理完后，会在同目录下输出对应的output文件
     :param data_path:
     :return:
@@ -68,6 +68,53 @@ def train_paper_data(data_path):
     f.close()
     f_out.close()
 
+
+def train_destination_data(file_path):
+    """
+    对税务局数据进行分析、词性标注、命名实体识别
+    :return:
+    """
+    if not os.path.exists(file_path):
+        print(file_path + " not exist")
+        return
+
+    try:
+        # 处理数据
+        f = open(file_path, mode="r", encoding="UTF-8")
+        f_out = open(file_path + ".out", mode="w", encoding="UTF-8")
+        # f_out2 = open(file_path + ".out2", "w")
+        line = f.readline()
+        while line:
+            ner = bf.ner_sentence(line)  # 包含分词、词性标注、命名实体识别3步
+            words_list = list(ner)
+            print(words_list)
+            write_str = ""
+            # write_str2 = ""
+            for t in words_list:
+                # 词性标注为名词的才写入输出文件
+                if len(t) > 1 and t[1][:1] == "n":
+                    # write_str2 += t[0]
+                    for i in range(len(t)):
+                        write_str += t[i] + "/"
+
+                write_str += "  "
+                # write_str2 += "  "
+
+            # 加上税收分类编码
+            write_str += "\n"
+            # write_str2 += "\n"
+            f_out.write(write_str)
+            # f_out2.write(write_str2)
+
+            line = f.readline()
+        f.close()
+        f_out.close()
+        # f_out2.close()
+    except UnicodeError:
+        print("UnicodeError:" + UnicodeError)
+
+
 if __name__ == "__main__":
     # test()
-    train_paper_data("src.data")
+    # train_paper_data("data/train.data")
+    train_destination_data("data/destination.data")
