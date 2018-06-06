@@ -25,7 +25,7 @@ def uniqe_data(file_path):
             word = word.strip()
             if len(word) > 1:
                 words.append(word)
-            
+
         line_in = f_in.read()
         words = list(set(words))
 

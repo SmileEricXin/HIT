@@ -82,7 +82,7 @@ def train_destination_data(file_path):
         # 处理数据
         f = open(file_path, mode="r", encoding="UTF-8")
         f_out = open(file_path + ".out", mode="w", encoding="UTF-8")
-
+        f_out_combine = open(file_path + ".combine", mode="w", encoding="UTF-8")
         line = f.readline()
         while line:
             ner = bf.ner_sentence(line)  # 包含分词、词性标注、命名实体识别3步
@@ -94,12 +94,18 @@ def train_destination_data(file_path):
                     write_str += str(t[0]) + " "
 
             # 加上税收分类编码
+            if len(write_str) > 0:
+                f_out.write(write_str + "\n")
+                f_out.flush()
+
             write_str = line.strip() + " >>>>>> " + write_str + "\n"
-            f_out.write(write_str)
+            f_out_combine.write(write_str)
+            f_out_combine.flush()
 
             line = f.readline()
         f.close()
         f_out.close()
+        f_out_combine.close()
     except UnicodeError:
         print("UnicodeError:" + UnicodeError)
 
