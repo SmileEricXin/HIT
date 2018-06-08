@@ -85,6 +85,7 @@ def train_destination_data(file_path):
         f_out_combine = open(file_path + ".combine", mode="w", encoding="UTF-8")
         line = f.readline()
         while line:
+            print(line)
             ner = bf.ner_sentence(line)  # 包含分词、词性标注、命名实体识别3步
             words_list = list(ner)
             write_str = ""
@@ -112,5 +113,5 @@ def train_destination_data(file_path):
 
 if __name__ == "__main__":
     # test()
-    train_destination_data("data/train.data")
+    train_destination_data("data/train2.data")
     # train_destination_data("data/destination.data")
