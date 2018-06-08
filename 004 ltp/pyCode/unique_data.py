@@ -65,7 +65,7 @@ def word_unique(file_path):
 
     f_in.close()
 
-    f_out = open(file_path + ".unique", mode="w", encoding="UTF-8")
+    f_out = open(file_path + ".word_unique", mode="w", encoding="UTF-8")
     words_len = len(words)
     print(words_len)
     f_out.write("名词总数：%(words_len)d\n" % {"words_len": words_len})
@@ -74,5 +74,5 @@ def word_unique(file_path):
 
 
 if __name__ == "__main__":
-    line_unique("./data/train.data.out")
-    # word_unique("./data/train.data.out")
+    # line_unique("./data/train2.data.out")
+    word_unique("./data/train2.data.out")

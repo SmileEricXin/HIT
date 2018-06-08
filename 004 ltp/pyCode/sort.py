@@ -2,7 +2,7 @@
 
 
 def take_length(data):
-    return len(data)
+    return len(data.split(" "))
 
 
 def sort_file_data(file_path):
