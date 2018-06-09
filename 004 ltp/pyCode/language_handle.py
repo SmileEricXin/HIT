@@ -88,10 +88,12 @@ def train_destination_data(file_path):
             print(line)
             ner = bf.ner_sentence(line)  # 包含分词、词性标注、命名实体识别3步
             words_list = list(ner)
+            print(words_list)
             write_str = ""
             for t in words_list:
                 # 词性标注为名词的才写入输出文件
-                if len(t) > 1 and t[1][:1] == "n":
+                if len(t) > 1 and (t[1][:1] == "n" or t[1][:1] == "v" or t[1][:1] == "p" or t[1][:1] == "a" or \
+                                               t[1][:1] == "b" or t[1][:1] == "i" or t[1][:1] == "j"):
                     write_str += str(t[0]) + " "
 
             # 加上税收分类编码
@@ -112,8 +114,6 @@ def train_destination_data(file_path):
 
 
 if __name__ == "__main__":
-    test = bf.ner_sentence("七姊鸡蛋挂面.")
-    print(list(test))
     # test()
-    # train_destination_data("data/train2.data")
+    train_destination_data("data/train2_test.data")
     # train_destination_data("data/destination.data")
