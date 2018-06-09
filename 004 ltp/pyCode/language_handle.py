@@ -112,6 +112,8 @@ def train_destination_data(file_path):
 
 
 if __name__ == "__main__":
+    test = bf.ner_sentence("七姊鸡蛋挂面.")
+    print(list(test))
     # test()
-    train_destination_data("data/train2.data")
+    # train_destination_data("data/train2.data")
     # train_destination_data("data/destination.data")
