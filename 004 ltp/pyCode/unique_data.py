@@ -74,5 +74,5 @@ def word_unique(file_path):
 
 
 if __name__ == "__main__":
-    # line_unique("./data/train2.data.out")
-    word_unique("./data/train2.data.out")
+    word_unique("./data/v2.1/train2.1.data.out")
+    line_unique("./data/v2.1/train2.1.data.out")

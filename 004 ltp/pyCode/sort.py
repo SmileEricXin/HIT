@@ -32,4 +32,4 @@ def sort_file_data(file_path):
 
 
 if __name__ == "__main__":
-    sort_file_data("./data/train.data.out")
+    sort_file_data("./data/v2.1/./data/v2.1/train2.1.01.data.out")

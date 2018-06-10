@@ -115,5 +115,21 @@ def train_destination_data(file_path):
 
 if __name__ == "__main__":
     # test()
-    train_destination_data("data/train2_test.data")
+    # train_destination_data("data/v2.1/train2.1.01.data")
+    # train_destination_data("data/v2.1/train2.1.02.data")
+    # train_destination_data("data/v2.1/train2.1.03.data")
+    # train_destination_data("data/v2.1/train2.1.04.data")
+    # train_destination_data("data/v2.1/train2.1.05.data")
     # train_destination_data("data/destination.data")
+
+    words = bf.ner_sentence("打印纸")
+    print(list(words))
+
+    words = bf.ner_sentence("增强管")
+    print(list(words))
+
+    words = bf.ner_sentence("电缆线")
+    print(list(words))
+
+    words = bf.ner_sentence("白水管")
+    print(list(words))
