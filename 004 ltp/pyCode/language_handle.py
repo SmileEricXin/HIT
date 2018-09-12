@@ -51,6 +51,7 @@ def train_paper_data(data_path):
             second = match.group(2)
             print(first)
 
+            # 进行命名实体识别、词性标注、分词等操作
             ner = bf.ner_sentence(first)
             words_list = list(ner)
             write_str = ""
