@@ -4,13 +4,17 @@ import re
 import io
 
 
-def take_length(data):
+def word_length_of_line(data):
+    """对输入按空格拆分并返回拆分后的长度"""
     return len(data.split(" "))
 
 
 def line_unique(file_path):
     """
-    file_path文件的每一行都不相同
+    先对file_path去重
+    然后按空格分词，以分词长度进行排序
+    最后输出到.line_unique文件中
+
     :param file_path:
     :return:
     """
@@ -30,7 +34,7 @@ def line_unique(file_path):
     lines = list(set(lines))
     print("lines: %d" % len(lines))
     print(lines)
-    lines.sort(key=take_length)
+    lines.sort(key=word_length_of_line)
     print(lines)
     f_out = open(file_path + ".line_unique", mode="w", encoding="utf-8")
     for line in lines:
@@ -41,6 +45,7 @@ def line_unique(file_path):
 def word_unique(file_path):
     """
     对 file_path 文件的名词进行处理，保证没有重复的名词
+    最后输出到.word_unique文件
     :param file_path:
     :return:
     """
@@ -73,6 +78,21 @@ def word_unique(file_path):
     f_out.close()
 
 
-if __name__ == "__main__":
-    word_unique("./data/v2.1/train2.1.data.out")
-    line_unique("./data/v2.1/train2.1.data.out")
+def tax_code_split_line(line):
+    """
+    line:开票明细名称、税收分类编码
+    :param line:
+    :return:
+    """
+    if len(line) == 0:
+        return []
+
+    try:
+        pattern = re.compile('(?<=)(.+)(\d+)')
+        words = pattern.findall(line)
+        for word in words:
+            print(word)
+    except ValueError as e:
+        print("ValueError:" + e)
+
+    return []
