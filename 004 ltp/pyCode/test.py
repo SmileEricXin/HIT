@@ -2,7 +2,7 @@
 from pyltp import SentenceSplitter as ss
 from pyltp import Segmentor
 import os
-
+import nlp
 
 def split_sentence(sentences):
     """分句"""
@@ -35,10 +35,12 @@ def recognize_word(words):
 
 
 if __name__ == "__main__":
-    words = split_word("中国位于亚洲东部")
-    list_word = list(words)
-    print(list_word)
-    recognize_word(list_word)
+    split = nlp.ner_sentence("我在金蝶云之家")
+    print(list(split))
+    # words = split_word("中国位于亚洲东部")
+    # list_word = list(words)
+    # print(list_word)
+    # recognize_word(list_word)
     # split_word('辛浪在金蝶云之家工作')
     # split_sentence('元芳你怎么看？我就趴窗口上看呗！')
 

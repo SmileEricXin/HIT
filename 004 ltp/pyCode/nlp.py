@@ -58,7 +58,7 @@ def postags_enhance(postags):
     ret_postags = []
     for tag in postags:
         if tag in postag_dict.keys():
-            tag = tag + '(' + postag_dict[tag] +')'
+            # tag = tag + '(' + postag_dict[tag] + ')'
             ret_postags.append(tag)
 
     return ret_postags
