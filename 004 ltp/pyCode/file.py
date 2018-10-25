@@ -138,3 +138,82 @@ def unique_and_sort_line_file(file_path):
     f_in.close()
     f_out.close()
 
+
+def combine_final_data(file1, file2):
+    """
+    以简称进行分类，共有408类
+    这408类目前共有两个映射文件，其实一个是 code_category.map，这个文件是类与分类编码的映射
+    另一个文件是03 税收分类编码表_汇总项.class.map.combine.merge，这个文件是类与其关键词的映射
+
+    现在将这两个表合并，形成以下映射关系：
+    种类  --  编码  --  关键词
+    :return:
+    """
+    try:
+        f1 = open(file1, mode="r", encoding="utf-8")
+        f2 = open(file2, mode="r", encoding="utf-8")
+        f_out = open('./clean_tax_code/final.merge', mode="w+", encoding="utf-8")
+
+        line1 = f1.readline()
+        save_dict = {}
+        while line1:
+            pos = line1.find('[')
+            word1 = line1[0:pos]
+            word2 = line1[pos:-1]
+
+            word1 = word1.strip()
+            word1 = '[' + word1 + ']'  # 另外一个文件的种类名称带方括号
+            save_dict[word1] = word2.strip()
+
+            line1 = f1.readline()
+
+        line2 = f2.readline()
+        while line2:
+            pos = line2.index('[', 1)
+            word1 = line2[0:pos]
+            word2 = line2[pos:-1]
+            word1 = word1.strip()
+
+            if word1 in save_dict.keys():
+                save_dict[word1] = save_dict[word1] + ' ' + word2.strip()
+                # print(save_dict[word1])
+
+            line2 = f2.readline()
+
+        for key, values in save_dict.items():
+            f_out.write(key + ' ' + values + '\r')
+
+    except UnicodeError:
+        pass
+    finally:
+        if f1:
+            f1.close()
+        if f2:
+            f2.close()
+        if f_out:
+            f_out.close()
+
+
+def line_unique(file):
+    """
+    对文件的按行读取，保证每行的数据不同，统计其数量
+    :param file:
+    :return:
+    """
+    f = open(file, mode="r", encoding="utf-8")
+    line = f.readline()
+    words = {}
+    while line:
+        if line not in words.keys():
+            words[line] = '0'
+
+        line = f.readline()
+
+    print('words number:', len(words.keys()))
+    f.close()
+
+
+if __name__ == "__main__":
+    # combine_final_data("./clean_tax_code/code_category.map", "./clean_tax_code/03 税收分类编码表_汇总项.
+    # class.map.combine.merge")
+    line_unique('./clean_tax_code/test.txt')
