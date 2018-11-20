@@ -1,3 +1,5 @@
 1. "01 train_new.txt"由Excel转换而来，转换后手工处理了部分无效数据
 2. "01 train_new.txt.unique_sort"是python正则匹配、排序后的输出文件
 3. "01 train_new.txt.unique_sort.part1" 和 "01 train_new.txt.unique_sort.part2"是人工将有税收分类编码的和税收分类编码的分开
+4. "01 train_new.txt.unique_sort.part2.patch" 是对 part2 文件中存在税收分类编码但不存在简称的数据进行完善
+5. "01 train_new.txt.unique_sort.part2.patch.check" 是对 patch 文件的数据进行校验，判断简称与税收分类编码是否一致

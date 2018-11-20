@@ -133,7 +133,64 @@ def patch_taxcode_jc(file_map, file_patch):
             f_out.close()
 
 
+def check_taxcode_match_jc(file_src, file_map):
+    """
+    用来检查训练数据集的简称和税收分类编码是否对的上
+    :param file_src:  训练集文件
+    :param file_map:  税收分类编码和简称的映射文件
+    :return:
+    """
+    if not os.path.exists(file_src) or not os.path.exists(file_map):
+        print('file not exist')
+        return
+
+    # 处理映射文件
+    f_map = open(file_map, mode="r", encoding="utf-8")
+    line = f_map.readline().strip()
+    src_map = dict()
+    com_match = re.compile('\[(\S+)\]\s+\[([0-9\', ]+)')
+    while line:
+        ma = re.match(com_match, line)
+        if ma:
+            src_map[ma.group(1)] = ma.group(2)
+        line = f_map.readline().strip()
+
+    f_map.close()
+
+    # 检查简称和税收分类编码是否匹配
+    count = 0
+    f_src = open(file_src, mode="r", encoding="utf-8")
+    f_out = open(file_src + '.check', mode="w+", encoding="utf-8")
+    line = f_src.readline().strip()
+    com_match = re.compile('\*([^*\]]+)\*.*\s+(\d+)')
+    while line:
+        is_wrong = True
+        count += 1
+        ma = re.match(com_match, line)
+        if ma:
+            jc = ma.group(1)
+            code = ma.group(2)
+            # print('jc:', jc, ' code:', code)
+            if jc in src_map.keys():
+                # print('jc in the map')
+                codes = src_map[jc] + ''
+                index = codes.find(code)
+                if index != -1:
+                    is_wrong = False
+
+        if is_wrong:
+            line = 'wwrong' + line
+        f_out.write(line + '\n')
+
+        line = f_src.readline().strip()
+
+    if f_src:
+        f_src.close()
+    if f_out:
+        f_out.close()
+
 if __name__ == "__main__":
-    patch_taxcode_jc('./data_train/00 pwy_taxcode.txt', './data_train/01 train_new.txt.unique_sort.part2')
+    check_taxcode_match_jc('./data_train/01 train_new.txt.unique_sort.part2.patch.check', './clean_tax_code/final.merge')
+    # patch_taxcode_jc('./data_train/00 pwy_taxcode.txt', './data_train/01 train_new.txt.unique_sort.part2')
     # name_unique_and_sort('./data_train/01 train_new.txt')
 
