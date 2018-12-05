@@ -131,8 +131,8 @@ def ner_sentence(sentence):
     postags = postag_word(words)
     postags = postags_enhance(postags)
     # print('\t'.join(postags))
-    ner = recognize_word(words, postags)
+    # ner = recognize_word(words, postags)
     # print('\t'.join(ner))
 
-    ret = zip(list(words), list(postags), list(ner))
+    ret = zip(list(words), list(postags))
     return ret
